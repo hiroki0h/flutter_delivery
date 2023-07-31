@@ -6,9 +6,18 @@ import 'dart:io';
 import 'package:actual/common/const/colors.dart';
 import 'package:actual/common/layout/default_layout.dart';
 import 'package:actual/common/component/custom_text_form_field.dart';
+import 'package:actual/common/view/root_tab.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String username = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +48,23 @@ class LoginScreen extends StatelessWidget {
                         CustomTextFormField(
                           hintText: '이메일을 입력해주세요.',
                           errorText: '에러가 있습니다.',
-                          onChanged: (String value) {},
+                          onChanged: (String value) {
+                            username = value;
+                          },
                         ),
                         const SizedBox(height: 16.0),
                         CustomTextFormField(
                           hintText: '비밀번호를 입력해주세요.',
                           errorText: '에러가 있습니다.',
-                          onChanged: (String value) {},
+                          onChanged: (String value) {
+                            password = value;
+                          },
                           obscureText: true,
                         ),
                         const SizedBox(height: 16.0),
                         ElevatedButton(
                           onPressed: () async {
-                            const rawString = 'aaa:aaa';
+                            final rawString = '$username:$password';
                             Codec<String, String> stringToBase64 =
                                 utf8.fuse(base64);
                             String token = stringToBase64.encode(rawString);
@@ -61,7 +74,11 @@ class LoginScreen extends StatelessWidget {
                                 headers: {'authorization': 'Basic $token'},
                               ),
                             );
-                            print(resp.data);
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const RootTab(),
+                              ),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: PRIMARY_COLOR,
@@ -80,7 +97,6 @@ class LoginScreen extends StatelessWidget {
                                 },
                               ),
                             );
-                            print(resp.data);
                           },
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.black,
