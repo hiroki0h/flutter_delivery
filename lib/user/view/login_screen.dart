@@ -1,9 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'dart:io';
 import 'package:actual/common/const/colors.dart';
+import 'package:actual/common/const/data.dart';
 import 'package:actual/common/layout/default_layout.dart';
 import 'package:actual/common/component/custom_text_form_field.dart';
 import 'package:actual/common/view/root_tab.dart';
@@ -74,6 +74,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 headers: {'authorization': 'Basic $token'},
                               ),
                             );
+                            final refreshToken = resp.data['refreshToken'];
+                            final accessToken = resp.data['accessToken'];
+                            storage.write(
+                                key: REFRESH_TOKEN_KEY, value: refreshToken);
+                            storage.write(
+                                key: ACCESS_TOKEN_KEY, value: accessToken);
+
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (_) => const RootTab(),
