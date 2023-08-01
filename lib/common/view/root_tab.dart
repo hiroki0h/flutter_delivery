@@ -29,11 +29,12 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
     });
   }
 
-  // @override
-  // void dispose() {
-  //   controller.removeListener(tabListener);
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    controller.removeListener(tabListener);
+    super.dispose();
+    // 객체가 제거 될 때 변수에 할당 된 메모리를 해제하기 위해
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +73,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
             ),
           ]),
       child: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: controller,
         children: const [
           Center(child: Text('홈')),
