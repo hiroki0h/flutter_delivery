@@ -9,8 +9,32 @@ class RootTab extends StatefulWidget {
   State<RootTab> createState() => _RootTabState();
 }
 
-class _RootTabState extends State<RootTab> {
+class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
+  // TabController? controller; controller를 쓸 때마다 null 처리를 계속해 줘야 하는 단점
+  // 나중에 언젠가는 세팅을 할 것이니 late 추가
+  late TabController controller;
   int index = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = TabController(length: 4, vsync: this);
+    // vsync 파라미터는 무조건 with SingleTickerProviderStateMixin 라고 한 다음에 클래스 넣어주어야함
+    controller.addListener(tabListener);
+  }
+
+  void tabListener() {
+    setState(() {
+      index = controller.index;
+    });
+  }
+
+  // @override
+  // void dispose() {
+  //   controller.removeListener(tabListener);
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
@@ -23,9 +47,10 @@ class _RootTabState extends State<RootTab> {
           // type: BottomNavigationBarType.shifting, // 클릭된 아이템이 조금 더 크게
           type: BottomNavigationBarType.fixed,
           onTap: (int index) {
-            setState(() {
-              this.index = index;
-            });
+            // setState(() {
+            //   this.index = index;
+            // }); 해당 인덱스 넣어주기
+            controller.animateTo(index);
           },
           currentIndex: index,
           items: const [
@@ -46,9 +71,18 @@ class _RootTabState extends State<RootTab> {
               label: '프로필',
             ),
           ]),
-      child: const Center(
-        child: Text('Root Tab'),
+      child: TabBarView(
+        controller: controller,
+        children: const [
+          Center(child: Text('홈')),
+          Center(child: Text('음식')),
+          Center(child: Text('주문')),
+          Center(child: Text('프로필')),
+        ],
       ),
+      // child: const Center(
+      //   child: Text('Root Tab'),
+      // ),
     );
   }
 }
