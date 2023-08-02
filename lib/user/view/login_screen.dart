@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'dart:io';
 import 'package:actual/common/const/colors.dart';
 import 'package:actual/common/const/data.dart';
 import 'package:actual/common/layout/default_layout.dart';
@@ -22,9 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final dio = Dio();
-    const emulatorIp = '10.0.2.2:3000';
-    const simulatorIp = '127.0.0.1:3000';
-    final ip = Platform.isIOS ? simulatorIp : emulatorIp;
 
     return DefaultLayout(
         child: SingleChildScrollView(
@@ -93,18 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: const Text('로그인'),
                         ),
                         TextButton(
-                          onPressed: () async {
-                            const refreshToken =
-                                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhYSIsInN1YiI6ImY1NWIzMmQyLTRkNjgtNGMxZS1hM2NhLWRhOWQ3ZDBkOTJlNSIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNjkwNzkxMzAwLCJleHAiOjE2OTA4Nzc3MDB9.XTV6DUbzVceZMDBLIk0kOFyewe2QQp9JaHD3G4MdpmE';
-                            final resp = await dio.post(
-                              'http://$ip/auth/token',
-                              options: Options(
-                                headers: {
-                                  'authorization': 'Bearer $refreshToken'
-                                },
-                              ),
-                            );
-                          },
+                          onPressed: () async {},
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.black,
                           ),
