@@ -77,11 +77,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             storage.write(
                                 key: ACCESS_TOKEN_KEY, value: accessToken);
 
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => const RootTab(),
-                              ),
-                            );
+                            // Navigator.of(context).push(
+                            //   MaterialPageRoute(
+                            //     builder: (_) => const RootTab(),
+                            //   ),
+                            // );
+                            // 스텍 지우기
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (_) => const RootTab(),
+                                ),
+                                (route) => false);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: PRIMARY_COLOR,

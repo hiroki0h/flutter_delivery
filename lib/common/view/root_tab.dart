@@ -42,37 +42,38 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
     return DefaultLayout(
       title: '코팩 딜리버리',
       bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: PRIMARY_COLOR,
-          unselectedItemColor: BODY_TEXT_COLOR,
-          selectedFontSize: 10,
-          unselectedFontSize: 10,
-          // type: BottomNavigationBarType.shifting, // 클릭된 아이템이 조금 더 크게
-          type: BottomNavigationBarType.fixed,
-          onTap: (int index) {
-            // setState(() {
-            //   this.index = index;
-            // }); 해당 인덱스 넣어주기
-            controller.animateTo(index);
-          },
-          currentIndex: index,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: '홈',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.fastfood_outlined),
-              label: '음식',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.receipt_long_outlined),
-              label: '주문',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outlined),
-              label: '프로필',
-            ),
-          ]),
+        selectedItemColor: PRIMARY_COLOR,
+        unselectedItemColor: BODY_TEXT_COLOR,
+        selectedFontSize: 10,
+        unselectedFontSize: 10,
+        // type: BottomNavigationBarType.shifting, // 클릭된 아이템이 조금 더 크게
+        type: BottomNavigationBarType.fixed,
+        onTap: (int index) {
+          // setState(() {
+          //   this.index = index;
+          // }); 해당 인덱스 넣어주기
+          controller.animateTo(index);
+        },
+        currentIndex: index,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fastfood_outlined),
+            label: '음식',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt_long_outlined),
+            label: '주문',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outlined),
+            label: '프로필',
+          ),
+        ],
+      ),
       child: TabBarView(
         physics: const NeverScrollableScrollPhysics(), // 스와이프해서 페이지 안 넘어가게
         controller: controller,
