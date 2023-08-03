@@ -11,10 +11,14 @@ class RestaurantScreen extends StatelessWidget {
   Future<List> paginateRestaurant() async {
     final dio = Dio();
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
-    final resp = await dio.get('http://$ip/restaurant',
-        options: Options(headers: {
+    final resp = await dio.get(
+      'http://$ip/restaurant',
+      options: Options(
+        headers: {
           'authorization': 'Bearer $accessToken',
-        }));
+        },
+      ),
+    );
     return resp.data['data'];
   }
 
@@ -41,7 +45,9 @@ class RestaurantScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const RestaurantDetailScreen(),
+                          builder: (_) => RestaurantDetailScreen(
+                            id: pItem.id,
+                          ),
                         ),
                       );
                     },
