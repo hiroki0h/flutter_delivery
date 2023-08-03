@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:actual/common/const/colors.dart';
+import 'package:actual/restaurant/model/restaurant_model.dart';
 
 class RestaurantCard extends StatelessWidget {
   final Widget image;
@@ -27,58 +28,81 @@ class RestaurantCard extends StatelessWidget {
       this.heroKey,
       super.key});
 
+  factory RestaurantCard.fromModel({
+    required RestaurantModel model,
+  }) {
+    return RestaurantCard(
+      image: Image.network(
+        model.thumbUrl,
+        fit: BoxFit.cover, // 이미지 전체
+      ),
+      // image: Image.asset(
+      //   'asset/img/food/ddeok_bok_gi.jpg',
+      //   fit: BoxFit.cover, // 이미지 전체
+      // ),
+      name: model.name,
+      tags: model.tags,
+      ratingsCount: model.ratingsCount,
+      deliveryTime: model.deliveryTime,
+      deliveryFee: model.deliveryFee,
+      ratings: model.ratings,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      ClipRRect(
-        borderRadius: BorderRadius.circular(isDetail ? 0 : 12.0),
-        child: image,
-      ),
-      const SizedBox(height: 16.0),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            name,
-            style: const TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w500,
+    return Column(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(isDetail ? 0 : 12.0),
+          child: image,
+        ),
+        const SizedBox(height: 16.0),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              name,
+              style: const TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-          Text(
-            tags.join(' · '),
-            style: const TextStyle(
-              color: BODY_TEXT_COLOR,
-              fontSize: 14.0,
+            Text(
+              tags.join(' · '),
+              style: const TextStyle(
+                color: BODY_TEXT_COLOR,
+                fontSize: 14.0,
+              ),
             ),
-          ),
-          const SizedBox(height: 8.0),
-          Row(
-            children: [
-              _IconText(
-                icon: Icons.star,
-                label: ratings.toString(),
-              ),
-              renderDot(),
-              _IconText(
-                icon: Icons.receipt,
-                label: ratingsCount.toString(),
-              ),
-              renderDot(),
-              _IconText(
-                icon: Icons.timelapse_outlined,
-                label: '$deliveryTime 분',
-              ),
-              renderDot(),
-              _IconText(
-                icon: Icons.monetization_on,
-                label: deliveryFee == 0 ? '무료' : deliveryFee.toString(),
-              ),
-            ],
-          ),
-        ],
-      )
-    ]);
+            const SizedBox(height: 8.0),
+            Row(
+              children: [
+                _IconText(
+                  icon: Icons.star,
+                  label: ratings.toString(),
+                ),
+                renderDot(),
+                _IconText(
+                  icon: Icons.receipt,
+                  label: ratingsCount.toString(),
+                ),
+                renderDot(),
+                _IconText(
+                  icon: Icons.timelapse_outlined,
+                  label: '$deliveryTime 분',
+                ),
+                renderDot(),
+                _IconText(
+                  icon: Icons.monetization_on,
+                  label: deliveryFee == 0 ? '무료' : deliveryFee.toString(),
+                ),
+              ],
+            ),
+          ],
+        )
+      ],
+    );
   }
 
   Widget renderDot() {
