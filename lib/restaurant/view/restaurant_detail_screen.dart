@@ -10,26 +10,72 @@ class RestaurantDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultLayout(
         title: 'asd',
-        child: Column(
-          children: [
-            RestaurantCard(
-              image: Image.asset(
-                'asset/img/food/ddeok_bok_gi.jpg',
-              ),
-              name: 'name',
-              tags: const ['tags', 'tags', 'tags'],
-              ratingsCount: 1,
-              deliveryTime: 2,
-              deliveryFee: 3,
-              ratings: 4,
-              isDetail: true,
-              detail: 'aaaa',
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: ProductCard(),
-            ),
+        child: CustomScrollView(
+          slivers: [
+            renderTop(),
+            renderLabel(),
+            renderProducts(),
           ],
-        ));
+        )
+
+        // Column(
+        //   children: [
+        //     const Padding(
+        //       padding: EdgeInsets.symmetric(horizontal: 16.0),
+        //       child: ProductCard(),
+        //     ),
+        //   ],
+        // ),
+        );
+  }
+
+  SliverPadding renderLabel() {
+    return const SliverPadding(
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      sliver: SliverToBoxAdapter(
+        child: Text(
+          '메뉴',
+          style: TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
+
+  SliverPadding renderProducts() {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            return const Padding(
+              padding: EdgeInsets.only(top: 16.0),
+              child: ProductCard(),
+            );
+          },
+          childCount: 10,
+        ),
+      ),
+    );
+  }
+
+  SliverToBoxAdapter renderTop() {
+    return SliverToBoxAdapter(
+      child: RestaurantCard(
+        image: Image.asset(
+          'asset/img/food/ddeok_bok_gi.jpg',
+        ),
+        name: 'name',
+        tags: const ['tags', 'tags', 'tags'],
+        ratingsCount: 1,
+        deliveryTime: 2,
+        deliveryFee: 3,
+        ratings: 4,
+        isDetail: true,
+        detail: 'aaaa',
+      ),
+    );
   }
 }
